@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class LoginActivity: AppCompatActivity(){
 
@@ -11,7 +12,7 @@ class LoginActivity: AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login);
 
-        login_button.setOnClickListener {
+        login_button_login.setOnClickListener {
             val email = email_edittext_login.text.toString()
             val password = password_edittext_login.text.toString()
 
@@ -20,7 +21,7 @@ class LoginActivity: AppCompatActivity(){
         }
 
 
-        go_to_register_textview.setOnClickListener {
+        back_to_register_textview.setOnClickListener {
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
