@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@color/colorPrimary">
+
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/email_edittext_login" android:layout_marginTop="32dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginLeft="32dp"
+            android:layout_marginStart="32dp" android:layout_marginRight="32dp" android:layout_marginEnd="32dp"
+            android:background="#ccc" android:padding="15sp" android:hint="Email" android:autoText="true"
+            android:layout_marginBottom="16dp" app:layout_constraintBottom_toTopOf="@+id/password_edittext_login"/>
+    <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberPassword"
+            android:ems="10"
+            android:id="@+id/password_edittext_login"
+            app:layout_constraintTop_toBottomOf="@+id/email_edittext_login"
+            app:layout_constraintEnd_toEndOf="@+id/email_edittext_login"
+            app:layout_constraintStart_toStartOf="@+id/email_edittext_login"
+            android:background="#ccc" android:hint="Password" android:padding="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/login_button"/>
+    <Button
+            android:text="Login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/login_button"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/password_edittext_login"
+            app:layout_constraintStart_toStartOf="@+id/password_edittext_login"
+            app:layout_constraintEnd_toEndOf="@+id/password_edittext_login" android:textSize="18sp"/>
+    <TextView
+            android:text="Go back to Register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_to_register_textview" android:textColor="#FFFFFF"
+            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/login_button"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/password_edittext_login"
+            app:layout_constraintEnd_toEndOf="@+id/password_edittext_login"/>
+</android.support.constraint.ConstraintLayout>
