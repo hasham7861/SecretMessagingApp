@@ -20,7 +20,7 @@ class LoginActivity: AppCompatActivity(){
 
         back_to_register_textview.setOnClickListener {
 
-//            val intent = Intent(this, MainActivity::class.java)
+//            val intent = Intent(this, RegisterActivity::class.java)
 //            startActivity(intent)
             finish()
 
