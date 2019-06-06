@@ -14,16 +14,12 @@ class LoginActivity: AppCompatActivity(){
         setContentView(R.layout.activity_login);
 
         login_button_login.setOnClickListener {
-
+            performLogin()
         }
 
-
         back_to_register_textview.setOnClickListener {
-
-//            val intent = Intent(this, RegisterActivity::class.java)
-//            startActivity(intent)
-            finish()
-
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
 
     }
@@ -47,10 +43,17 @@ class LoginActivity: AppCompatActivity(){
                 if (!it.isSuccessful) return@addOnCompleteListener
 
                 // else if successful
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                // clears all the old activities from the context
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
+                Toast.makeText(this,"Successfully logged in",Toast.LENGTH_SHORT).show()
                 Log.d("Login","Successfully logged in : ${it.result?.user?.uid}")
             }
             .addOnFailureListener{
                 Log.d("Login","Can't login in : ${it.message}")
+                Toast.makeText(this,"Incorrect email / password",Toast.LENGTH_SHORT).show()
             }
 
     }

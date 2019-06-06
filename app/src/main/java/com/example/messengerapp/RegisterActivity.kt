@@ -2,7 +2,6 @@ package com.example.messengerapp
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -32,8 +31,9 @@ class RegisterActivity : AppCompatActivity() {
             Log.d("RegisterActivity", "Try to show login activity")
 
             // Launch the login activity somehow
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+            finish()
         }
 
         selectphoto_button_register.setOnClickListener{
@@ -86,6 +86,13 @@ class RegisterActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
+
+                // Open up Messages
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                // clears all the old activities from the context
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+
 
                 // else if successful
                 Log.d("Main","Successfully created user with uid: ${it.result?.user?.uid}")
