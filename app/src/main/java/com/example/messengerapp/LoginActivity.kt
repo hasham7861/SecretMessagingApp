@@ -11,7 +11,7 @@ class LoginActivity: AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login)
 
         login_button_login.setOnClickListener {
             performLogin()
@@ -19,6 +19,7 @@ class LoginActivity: AppCompatActivity(){
 
         back_to_register_textview.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
 

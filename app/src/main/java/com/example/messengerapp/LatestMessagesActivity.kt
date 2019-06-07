@@ -3,6 +3,7 @@ package com.example.messengerapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 class LatestMessagesActivity : AppCompatActivity (){
 
     override fun onCreate(savedInstantState: Bundle?){
-        super.onCreate(savedInstantState);
+        super.onCreate(savedInstantState)
         setContentView(R.layout.activity_lastest_messages)
         verifyLogin()
 
@@ -31,6 +32,9 @@ class LatestMessagesActivity : AppCompatActivity (){
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
        when(item?.itemId){
            R.id.menu_new_message -> {
+               val intent = Intent(this, NewMessageActivity::class.java)
+               Log.d("New Message", "Clicked")
+               startActivity(intent)
            }
 
            R.id.menu_sign_out -> {

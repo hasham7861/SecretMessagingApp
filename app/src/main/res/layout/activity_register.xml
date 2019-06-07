@@ -25,7 +25,7 @@
             android:id="@+id/selectphoto_imageview_register"
             app:layout_constraintTop_toTopOf="@+id/selectphoto_button_register"
             app:civ_border_width="2dp"
-            app:civ_border_color="@color/secondaryColor" android:layout_height="130dp" android:layout_width="130dp"
+            app:civ_border_color="@color/colorAccent" android:layout_height="130dp" android:layout_width="130dp"
             app:layout_constraintEnd_toEndOf="@+id/selectphoto_button_register"
             app:layout_constraintBottom_toBottomOf="@+id/selectphoto_button_register"/>
     <EditText

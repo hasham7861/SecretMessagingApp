@@ -10,7 +10,6 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.IgnoreExtraProperties
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
@@ -147,8 +146,6 @@ class RegisterActivity : AppCompatActivity() {
     }
 }
 
-@IgnoreExtraProperties
-data class User(
-    val uid: String ? = "",
-    val username: String = "",
-    val profileImageUrl: String = "")
+class User(val uid: String, val username: String, val profileImageUrl: String){
+    constructor():this("","","")
+}
