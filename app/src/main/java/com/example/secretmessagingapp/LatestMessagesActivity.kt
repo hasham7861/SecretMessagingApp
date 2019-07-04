@@ -15,16 +15,18 @@ class LatestMessagesActivity : AppCompatActivity (){
         super.onCreate(savedInstantState)
         setContentView(R.layout.activity_latest_messages)
         verifyLogin()
-
     }
 
     private fun verifyLogin(){
 
-        val uid = FirebaseAuth.getInstance().uid
+        val uid = FirebaseAuth.getInstance()?.uid
         // Meaning user is not logged in
         if(uid == null){
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            Log.d("LatestMessagesActivity","Unable to login")
+        }else{
+            Log.d("LatestMessagesActivity","Log in success")
         }
 
     }
