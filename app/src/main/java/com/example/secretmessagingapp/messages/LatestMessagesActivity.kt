@@ -1,4 +1,4 @@
-package com.example.secretmessagingapp
+package com.example.secretmessagingapp.messages
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.example.secretmessagingapp.R
+import com.example.secretmessagingapp.registerlogin.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 
 

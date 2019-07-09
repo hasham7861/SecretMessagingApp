@@ -1,8 +1,11 @@
-package com.example.secretmessagingapp
+package com.example.secretmessagingapp.messages
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import com.example.secretmessagingapp.R
+import com.example.secretmessagingapp.models.User
 
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -22,14 +25,7 @@ class NewMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_message)
         supportActionBar?.title = "Select User"
 
-//        val adapter = GroupAdapter<ViewHolder>()
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        adapter.add(UserItem())
-//        recyclerview_newmessage.adapter = adapter
-
         fetchUsers()
-
     }
 
     private fun fetchUsers(){
@@ -46,6 +42,17 @@ class NewMessageActivity : AppCompatActivity() {
                     if(user != null)
                         adapter.add(UserItem(user))
                 }
+                
+                
+                adapter.setOnItemClickListener { _, view ->
+                    val intent = Intent (view.context,ChatLogActivity::class.java)
+                    startActivity(intent)
+                    // Save resources by closing down previous activity
+                    finish()
+                }
+                
+                
+                
                 recyclerview_newmessage.adapter = adapter
             }
             override fun onCancelled(p0: DatabaseError) {
@@ -56,14 +63,12 @@ class NewMessageActivity : AppCompatActivity() {
 
 }
 
-class UserItem(val user:User): Item<ViewHolder>(){
+class UserItem(val user: User): Item<ViewHolder>(){
     override fun bind(viewHolder: ViewHolder, position: Int) {
         // bind each list object inside the recycler view
-
         viewHolder.itemView.username_textview_newmessage.text = user.username
         // Load images using image caching library
         Picasso.get().load(user.profileImageUrl).into(viewHolder.itemView.image_imageview_newmessage)
-
     }
 
     override fun getLayout() : Int{
