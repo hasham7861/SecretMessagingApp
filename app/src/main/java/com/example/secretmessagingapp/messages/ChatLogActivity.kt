@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.secretmessagingapp.R
+import com.example.secretmessagingapp.models.User
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -16,8 +17,11 @@ class ChatLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_log)
 
-        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
-        supportActionBar?.title = username
+//        val username = intent.getStringExtra(NewMessageActivity.USER_KEY)
+        val user = intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+
+        supportActionBar?.title = user.username
+
 
         val adapter = GroupAdapter<ViewHolder>()
         adapter.add(ChatFromItem())

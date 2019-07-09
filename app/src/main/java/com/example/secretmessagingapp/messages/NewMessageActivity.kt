@@ -49,7 +49,10 @@ class NewMessageActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener {item, view ->
                     var userItem = item as UserItem;
                     val intent = Intent (view.context,ChatLogActivity::class.java)
-                    intent.putExtra(USER_KEY, userItem.user.username)
+//                    intent.putExtra(USER_KEY, userItem.user.username)
+                    // Passing a user object to chatlog
+                    intent.putExtra(USER_KEY,userItem.user)
+
                     startActivity(intent)
                     // Save resources by closing down previous activity
                     finish()
