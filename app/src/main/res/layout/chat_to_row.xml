@@ -6,7 +6,7 @@
                                                    android:layout_height="wrap_content">
 
     <TextView
-            android:text="Your message should go here"
+            android:text="My message should go here"
             android:layout_width="wrap_content"
             android:maxWidth="240dp"
             android:layout_height="wrap_content"
