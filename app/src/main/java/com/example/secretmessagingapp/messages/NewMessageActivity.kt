@@ -27,7 +27,9 @@ class NewMessageActivity : AppCompatActivity() {
 
         fetchUsers()
     }
-
+    companion object{
+        val USER_KEY = "USER_KEY"
+    }
     private fun fetchUsers(){
         val ref = FirebaseDatabase.getInstance().getReference("/users")
         // Listen to updates on database and only then update the add user screen
@@ -44,8 +46,10 @@ class NewMessageActivity : AppCompatActivity() {
                 }
                 
                 
-                adapter.setOnItemClickListener { _, view ->
+                adapter.setOnItemClickListener {item, view ->
+                    var userItem = item as UserItem;
                     val intent = Intent (view.context,ChatLogActivity::class.java)
+                    intent.putExtra(USER_KEY, userItem.user.username)
                     startActivity(intent)
                     // Save resources by closing down previous activity
                     finish()
