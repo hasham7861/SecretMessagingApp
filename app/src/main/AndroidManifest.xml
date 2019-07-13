@@ -14,7 +14,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".messages.ChatLogActivity">
+        <activity android:name=".messages.ChatLogActivity"
+                  >
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".messages.LatestMessagesActivity"/>
