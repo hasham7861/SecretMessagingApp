@@ -46,15 +46,18 @@ class ChatLogActivity : AppCompatActivity() {
             Log.d(TAG,"Attempt to send message")
             performSendMessage()
 
-
         }
 
 
     }
 
     private fun listenForMessages(){
+
+
+        val fromId = FirebaseAuth.getInstance().uid
+        val toId = toUser?.uid
         // Reference to messages log in database
-        val ref = FirebaseDatabase.getInstance().getReference("/messages")
+        val ref = FirebaseDatabase.getInstance().getReference("/user-messages/$fromId/$toId")
 
         ref.addChildEventListener(object: ChildEventListener{
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
@@ -72,6 +75,8 @@ class ChatLogActivity : AppCompatActivity() {
                         adapter.add(ChatToItem(chatMessage.text,toUser!!))
                     }
 
+                    // Scroll the to end of the recycler view after adding messages
+                    recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
 
                 }
 
@@ -101,21 +106,35 @@ class ChatLogActivity : AppCompatActivity() {
 
         val text = edittext_chat_log.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
-        val user =  intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
-        val toId = user.uid
+//        val user =  intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+        val toId = toUser?.uid
 
         if(fromId == null) return
 
-        val reference = FirebaseDatabase
-                        .getInstance()
-                        .getReference("/messages").push()
+//        val reference = FirebaseDatabase
+//                        .getInstance()
+//                        .getReference("/messages").push()
 
-        val chatMessage = ChatMessage(reference.key!!,text,fromId!!,toId,System.currentTimeMillis()/1000)
+        val reference = FirebaseDatabase
+            .getInstance()
+            .getReference("/user-messages/$fromId/$toId").push()
+
+        val toReference = FirebaseDatabase
+            .getInstance()
+            .getReference("/user-messages/$toId/$fromId").push()
+
+        val chatMessage = ChatMessage(reference.key!!,text,fromId!!,toId!!,System.currentTimeMillis()/1000)
         reference.setValue(chatMessage).addOnSuccessListener {
             Log.d(TAG, "Saved cour chat message: ${reference.key}")
-            edittext_chat_log.setText("")
+
+            // Clear text after sending message
+            edittext_chat_log.text.clear()
+            // Scroll the the bottom of the messages after sending message
+            recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
 
         }
+
+        toReference.setValue(chatMessage)
     }
 
 
