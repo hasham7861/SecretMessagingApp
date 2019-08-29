@@ -79,8 +79,7 @@ class ChatLogActivity : AppCompatActivity() {
                     recyclerview_chat_log.scrollToPosition(adapter.itemCount-1)
 
                 }
-
-
+                
             }
             override fun onCancelled(p0: DatabaseError) {
 
@@ -106,19 +105,17 @@ class ChatLogActivity : AppCompatActivity() {
 
         val text = edittext_chat_log.text.toString()
         val fromId = FirebaseAuth.getInstance().uid
-//        val user =  intent.getParcelableExtra<User>(NewMessageActivity.USER_KEY)
+
         val toId = toUser?.uid
 
         if(fromId == null) return
 
-//        val reference = FirebaseDatabase
-//                        .getInstance()
-//                        .getReference("/messages").push()
 
+        // Adding reference of your current message from you to receiver
         val reference = FirebaseDatabase
             .getInstance()
             .getReference("/user-messages/$fromId/$toId").push()
-
+        // Adding reference of your message on the other end, so from receiver perspective to sender
         val toReference = FirebaseDatabase
             .getInstance()
             .getReference("/user-messages/$toId/$fromId").push()
@@ -135,6 +132,14 @@ class ChatLogActivity : AppCompatActivity() {
         }
 
         toReference.setValue(chatMessage)
+
+        // Created an entry into latest messages for keeping track of recent messages sent
+        val latestMessageRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId/$toId")
+        latestMessageRef.setValue(chatMessage)
+
+        // keeping track of messages on the other side for receiver
+        val latestMessageToRef = FirebaseDatabase.getInstance().getReference("/latest-messages/$toId/$fromId")
+        latestMessageToRef.setValue(chatMessage)
     }
 
 
