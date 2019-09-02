@@ -1,5 +1,9 @@
 package com.example.secretmessagingapp.messages
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +11,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.example.secretmessagingapp.R
+import com.example.secretmessagingapp.jobscheduler.MyJobService
 import com.example.secretmessagingapp.messages.NewMessageActivity.Companion.USER_KEY
 import com.example.secretmessagingapp.models.ChatMessage
 import com.example.secretmessagingapp.models.User
@@ -25,7 +30,11 @@ class LatestMessagesActivity : AppCompatActivity (){
     companion object{
         var currentUser: User? = null
         var TAG = "LATESTMESSAGES"
+        var jobCreated = false
     }
+    private var jobId = 0
+
+
     override fun onCreate(savedInstantState: Bundle?){
         super.onCreate(savedInstantState)
         setContentView(R.layout.activity_latest_messages)
@@ -41,15 +50,32 @@ class LatestMessagesActivity : AppCompatActivity (){
             startActivity(intent)
         }
 
-        listenForLatestMessages()
+        // perform the job scheduler here to delete all the messages only from db and logout
+        if(!jobCreated){
+            val serviceComponent = ComponentName(this, MyJobService::class.java)
+            scheduleJob(serviceComponent)
+            jobCreated = true
+        }
 
         fetchCurrentUser()
-        verifyLogin()
-
+        // load in messages once logged in
+        if(verifyLogin())
+            listenForLatestMessages()
 
     }
 
-    val latestMessagesMap = HashMap<String,ChatMessage>()
+
+    private fun scheduleJob(serviceComponent: ComponentName){
+        var info = JobInfo.Builder(jobId++,serviceComponent)
+            .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+            .setPersisted(true)
+            .setPeriodic(24 * 60 * 60 * 1000)
+            .build()
+        (getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler).schedule(info)
+        Log.d(TAG,"Scheduling Job")
+    }
+
+    private val latestMessagesMap = HashMap<String,ChatMessage>()
 
     // Refresh the whole recycler view and update it to recent messages
     private fun refreshRecyclerViewMessages(){
@@ -89,11 +115,7 @@ class LatestMessagesActivity : AppCompatActivity (){
 
     }
 
-
-
-    val adapter = GroupAdapter<ViewHolder>()
-
-
+    private val adapter = GroupAdapter<ViewHolder>()
 
     private fun fetchCurrentUser(){
         val uid = FirebaseAuth.getInstance().uid
@@ -110,7 +132,7 @@ class LatestMessagesActivity : AppCompatActivity (){
         })
     }
 
-    private fun verifyLogin(){
+    private fun verifyLogin(): Boolean {
 
         val uid = FirebaseAuth.getInstance()?.uid
         // Meaning user is not logged in
@@ -118,8 +140,10 @@ class LatestMessagesActivity : AppCompatActivity (){
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             Log.d("LatestMessagesActivity","Unable to login")
+            return false
         }else{
             Log.d("LatestMessagesActivity","Log in success")
+            return true
         }
 
     }

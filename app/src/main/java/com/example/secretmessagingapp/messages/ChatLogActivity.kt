@@ -20,8 +20,6 @@ import kotlinx.android.synthetic.main.chat_from_row.view.*
 import kotlinx.android.synthetic.main.chat_to_row.view.*
 
 
-
-
 class ChatLogActivity : AppCompatActivity() {
 
     companion object{
@@ -81,21 +79,13 @@ class ChatLogActivity : AppCompatActivity() {
                 }
 
             }
-            override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(p0: DatabaseError) {}
 
-            }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {}
 
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {}
 
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-            }
-
-
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-            }
+            override fun onChildRemoved(p0: DataSnapshot) {}
 
         })
     }
