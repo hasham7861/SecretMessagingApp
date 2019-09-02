@@ -18,5 +18,5 @@ This app is a real-time messaging app designed for a small group. Note: the data
 ![](app-images/LatestMessages.JPG)
 
 ## ~~ Data Wiped after certain time ~~
-![](app-images/DataWipedAfter24hrs.JPG)
+![](app-images/DataWipedAfterTime.JPG)
 
