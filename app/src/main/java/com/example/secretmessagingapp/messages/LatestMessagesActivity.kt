@@ -59,8 +59,8 @@ class LatestMessagesActivity : AppCompatActivity (){
 
         fetchCurrentUser()
         // load in messages once logged in
-        if(verifyLogin())
-            listenForLatestMessages()
+//        if(verifyLogin())
+//            listenForLatestMessages()
 
     }
 

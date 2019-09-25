@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.secretmessagingapp.R
 import com.example.secretmessagingapp.models.User
 import com.example.secretmessagingapp.views.UserItem
+import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
@@ -26,7 +27,7 @@ class NewMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_message)
         supportActionBar?.title = "Select User"
 
-        fetchUsers()
+     fetchUsers()
     }
     companion object{
         val USER_KEY = "USER_KEY"
@@ -42,7 +43,7 @@ class NewMessageActivity : AppCompatActivity() {
                 p0.children.forEach{
                     Log.d("NewMessage",it.toString())
                     val user = it.getValue(User::class.java)
-                    if(user != null)
+                    if(user != null && user.uid != FirebaseAuth.getInstance().uid)
                         adapter.add(UserItem(user))
                 }
                 
@@ -50,12 +51,11 @@ class NewMessageActivity : AppCompatActivity() {
                 adapter.setOnItemClickListener {item, view ->
                     var userItem = item as UserItem
                     val intent = Intent (view.context,ChatLogActivity::class.java)
-//                    intent.putExtra(USER_KEY, userItem.user.username)
                     // Passing a user object to chatlog
                     intent.putExtra(USER_KEY,userItem.user)
 
                     startActivity(intent)
-                    // Save resources by closing down previous activity
+
                     finish()
                 }
                 

@@ -25,7 +25,6 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
 
-
         register_button_register.setOnClickListener {
             performRegister()
         }
@@ -33,9 +32,6 @@ class RegisterActivity : AppCompatActivity() {
         already_have_account_text_view.setOnClickListener {
             Log.d("RegisterActivity", "Try to show login activity")
 
-            // Launch the login activity somehow
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
             finish()
         }
 
@@ -59,8 +55,6 @@ class RegisterActivity : AppCompatActivity() {
             selectphoto_imageview_register.setImageBitmap(bitmap)
 
             selectphoto_button_register.alpha = 0f
-
-
         }
         else{
             Log.d("RegisterActivity", "Photo not selected")
@@ -74,18 +68,30 @@ class RegisterActivity : AppCompatActivity() {
         val username = username_edittext_register.text.toString()
         val email = email_edittext_register.text.toString()
         val password = password_edittext_register.text.toString()
-
-        Log.d("RegisterActivity", "Email is: $username")
-        Log.d("RegisterActivity", "Email is: $email")
-        Log.d("RegisterActivity", "Password: $password")
+        val image = selectphoto_imageview_register.drawable;
 
 
-        if(email.isEmpty() || password.isEmpty()){
-            Toast.makeText(this,"Please enter text in email with password", Toast.LENGTH_SHORT).show()
+        if(username.isEmpty()){
+            Toast.makeText(this,"Please enter username", Toast.LENGTH_SHORT).show()
             return
         }
 
-//        // Create new user at Firebase
+        if(email.isEmpty()){
+            Toast.makeText(this,"Please enter email ", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(password.isEmpty()){
+            Toast.makeText(this,"Please enter a valid password", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(image == null){
+            Toast.makeText(this,"Please select an image", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Create new user at Firebase
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener {
                 if (!it.isSuccessful) return@addOnCompleteListener
